@@ -9,7 +9,7 @@
 #include <freertos/projdefs.h>
 #include "driver/i2c_master.h"
 #include "esp_err.h"
-#include "lvgl.h"
+//#include "lvgl.h"
 
 
 #define B4 0
@@ -59,6 +59,7 @@ V Pulse Width = 2 */
 
 i2c_master_bus_handle_t i2cBusHandle;
 i2c_master_dev_handle_t pcaHandle;
+esp_lcd_panel_handle_t panelHandle;
 
 i2c_master_bus_config_t i2cBusConfig = {
     .i2c_port = I2C_NUM_0,
@@ -138,7 +139,7 @@ static void tftWriteCommand(uint8_t cmd, uint8_t data) {
 void displayInit(){
     pcaClear(TFT_RESET);
     vTaskDelay(pdMS_TO_TICKS(10));
-    pcaASet(TFT_RESET);
+    pcaSet(TFT_RESET);
     vTaskDelay(pdMS_TO_TICKS(120));
 
     tftWriteCommand(0xFF,0x30); tftWriteCommand(0xFF,0x52); tftWriteCommand(0xFF,0x01);
@@ -199,7 +200,6 @@ void displayInit(){
 }
 
 void panelDef(){
-esp_lcd_rgb_panel_handle_t panelHandle = NULL;
 esp_lcd_rgb_panel_config_t panelConfig = {
     .data_width = 16,
     .clk_src = LCD_CLK_SRC_DEFAULT,
@@ -223,11 +223,10 @@ esp_lcd_rgb_panel_config_t panelConfig = {
         .vsync_back_porch = 14,
         .vsync_front_porch = 16,
     },
-    .flags.fb_in_psram= = true,
+    .flags.fb_in_psram = true,
     .flags.double_fb = true,
 };
-
-ESP_ERROR_CHECK(esp_lcd_new_rgb_panel(&panelConfig, &panel_handle));
+    ESP_ERROR_CHECK(esp_lcd_new_rgb_panel(&panelConfig, &panelHandle));
 }
 
 void app_main() {
@@ -237,10 +236,9 @@ void app_main() {
     displayInit();
     pcaSet(TFT_BACKLIGHT); //enable backlight
     panelDef(); //initialise panel
-    ESP_ERROR_CHECK(esp_lcd_rgb_panel_reset(panelHandle));
-    ESP_ERROR_CHECK(esp_lcd_rgb_panel_init(panelHandle));
-    ESP_ERROR_CHECK(esp_lcd_rgb_panel_set_gap(panelHandle, 0, 0));
-    ESP_ERROR_CHECK(esp_lcd_rgb_panel_disp_on_off(panelHandle, true));
+    ESP_ERROR_CHECK(esp_lcd_panel_reset(panelHandle));
+    ESP_ERROR_CHECK(esp_lcd_panel_init(panelHandle));
+    ESP_ERROR_CHECK(esp_lcd_panel_disp_on_off(panelHandle, true));
     
 
     vTaskDelay(1000/portTICK_PERIOD_MS);
