@@ -240,6 +240,5 @@ void app_main() {
     ESP_ERROR_CHECK(esp_lcd_panel_init(panelHandle));
     ESP_ERROR_CHECK(esp_lcd_panel_disp_on_off(panelHandle, true));
     
-
     vTaskDelay(1000/portTICK_PERIOD_MS);
 }
