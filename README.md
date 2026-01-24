@@ -1,4 +1,4 @@
-# ESP RGB Qualia 2: The Electric Boogaloo
+# ESP RGB Qualia 2
 
 An ESP-IDF firmware project for the Adafruit Qualia S3 RGB666 board, featuring custom display initialization and control via I2C expander.
 
@@ -10,7 +10,7 @@ This project implements low-level display control for the Adafruit Qualia S3 RGB
 
 - **Board**: Adafruit Qualia S3 RGB666
 - **MCU**: ESP32-S3
-- **I/O Expander**: PCA9554 (I2C address 0x38)
+- **I/O Expander**: PCA9554 (I2C address 0x3F)
 - **Display Interface**: RGB666 parallel interface
 
 ### Pin Configuration
