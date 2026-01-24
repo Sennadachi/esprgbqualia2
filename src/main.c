@@ -70,11 +70,12 @@ i2c_master_bus_config_t i2cBusConfig = {
 };
 
 i2c_device_config_t i2cDeviceConfig = {
-    .dev_addr_length = 7,
-    .device_address = 0x38,
+    .dev_addr_length = I2C_ADDR_BIT_7,
+    .device_address = 0x3F,
     .scl_speed_hz = 100000,
     .scl_wait_us = 0,
 };
+
 
 //send any byte to any reg of the PCA expander through I2C
 esp_err_t pcaWriteRegister(uint8_t reg, uint8_t value) {
@@ -235,6 +236,9 @@ void app_main() {
     pcaInit();
     displayInit();
     pcaSet(TFT_BACKLIGHT); //enable backlight
+    printf("Total heap: %lu bytes\n", (unsigned long)esp_get_free_heap_size());
+    printf("PSRAM total: %lu bytes\n", (unsigned long)heap_caps_get_total_size(MALLOC_CAP_SPIRAM));
+    printf("PSRAM free: %lu bytes\n", (unsigned long)heap_caps_get_free_size(MALLOC_CAP_SPIRAM));
     panelDef(); //initialise panel
     ESP_ERROR_CHECK(esp_lcd_panel_reset(panelHandle));
     ESP_ERROR_CHECK(esp_lcd_panel_init(panelHandle));
@@ -242,3 +246,4 @@ void app_main() {
     
     vTaskDelay(1000/portTICK_PERIOD_MS);
 }
+
