@@ -94,7 +94,12 @@ void pcaInit(void) {
 static inline void pcaWriteOut(void)
 {
     uint8_t buf[2] = { 0x01, pcaOut };
-    ESP_ERROR_CHECK(i2c_master_transmit(pcaHandle, buf, 2, -1));
+    esp_err_t ret = i2c_master_transmit(pcaHandle, buf, 2, 100);
+    if (ret != ESP_OK) {
+        printf("I2C write failed: 0x%x, retrying...\n", ret);
+        vTaskDelay(pdMS_TO_TICKS(10));
+        ESP_ERROR_CHECK(i2c_master_transmit(pcaHandle, buf, 2, 100));
+    }
 }
 
 //set a bit of the PCA expander
