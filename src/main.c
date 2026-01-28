@@ -10,6 +10,7 @@
 #include "driver/i2c_master.h"
 #include "esp_err.h"
 #include "esp_heap_caps.h"
+//#include "freertos/semphr.h"
 //#include "lvgl.h"
 
 
@@ -145,6 +146,7 @@ static void tftWriteCommand(uint8_t cmd, uint8_t data) {
     tftWrite9bit(1, data);  // D/C=1 for data
     pcaSet(TFT_CS);
 }
+
 
 void displayInit(){
     pcaClear(TFT_RESET);  // Assert reset (active LOW)
@@ -336,7 +338,7 @@ void app_main() {
 
     panelDef(); //initialise panel
     printf("RGB panel initialized successfully!\n");
-
+   
     redFrameBuffers();
 
     printf("Starting displayInit()...\n");
@@ -345,7 +347,6 @@ void app_main() {
    
     pcaSet(TFT_BACKLIGHT); //enable backlight
 
-
-    vTaskDelay(1000/portTICK_PERIOD_MS);
+    vTaskDelay(pdMS_TO_TICKS(2000));
 }
 
