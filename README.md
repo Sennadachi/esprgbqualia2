@@ -6,6 +6,8 @@ An ESP-IDF firmware project for the Adafruit Qualia S3 RGB666 board and the NV30
 
 This project implements low-level display control for the Adafruit Qualia S3 RGB666 development board. It utilizes the ESP32-S3's RGB parallel display interface and manages display initialization through a PCA9554 I2C GPIO expander.
 
+(AI readme btw)
+
 ## Hardware
 
 - **Board**: Adafruit Qualia S3 RGB666
