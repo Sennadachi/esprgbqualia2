@@ -1,6 +1,6 @@
 # ESP RGB Qualia 2
 
-An ESP-IDF firmware project for the Adafruit Qualia S3 RGB666 board, featuring custom display initialization and control via I2C expander.
+An ESP-IDF firmware project for the Adafruit Qualia S3 RGB666 board and the NV3052C 4" 720x720 TFT Display, featuring custom display initialization and control via I2C expander.
 
 ## Overview
 
@@ -126,45 +126,10 @@ If you prefer to use ESP-IDF directly:
 - **Display Initialization**:
   - `displayInit()`: Complete display initialization sequence with timing control
 
-## Configuration
-
-The display initialization sequence is defined in [command_words.txt](command_words.txt) and implemented in the `displayInit()` function. This includes gamma correction, power control, and display timing parameters.
-
-## Development
-
-### Adding Features
-
-The main application loop is in `app_main()` in [src/main.c](src/main.c). Current implementation includes:
-- I2C bus and device initialization
-- PCA9554 expander setup
-- Display initialization (currently commented out)
-
-### Debugging
-
-Use the ESP-IDF logging functions:
-```c
-#include "esp_log.h"
-ESP_LOGI(TAG, "Your message");
-ESP_ERROR_CHECK(function_call);
-```
-
-## License
-
-This project is part of Hockley Instruments development work.
 
 ## Repository
 
-[https://github.com/Sennadachi/esprgbqualia2the_electric_boogaloo](https://github.com/Sennadachi/esprgbqualia2the_electric_boogaloo)
+[https://github.com/Sennadachi/esprgbqualia2](https://github.com/Sennadachi/esprgbqualia2)
 
 ## Notes
 
-- The `displayInit()` function is currently not called in `app_main()` - uncomment to enable display initialization
-- The project uses FreeRTOS for task management with configurable delays
-- I2C internal pull-ups are enabled by default
-- Display backlight control is available via PCA9554 pin 4
-
-## Troubleshooting
-
-- **I2C Communication Issues**: Verify PCA9554 address (0x38) and I2C pin connections
-- **Display Not Initializing**: Check TFT_RESET timing and SPI bit-banging signals
-- **Build Errors**: Ensure ESP-IDF and PlatformIO are properly configured for ESP32-S3
